@@ -1,11 +1,4 @@
 #include <stdio.h>
-#ifndef _XOPEN_SOURCE
-#define _XOPEN_SOURCE 700
-#endif
-#ifndef _XOPEN_SOURCE_EXTENDED
-#define _XOPEN_SOURCE_EXTENDED
-#endif
-
 #include <ctype.h>
 #include <stdlib.h>
 #include <time.h>
@@ -769,7 +762,7 @@ static void editor_draw(WINDOW* edwin, Editor* ed) {
   }
   if (vy < win_h) {
     wattron(edwin, COLOR_PAIR(COMMENT_PAIR));
-    mvwprintw(edwin, vy, 0, "      ~");
+    mvwprintw(edwin, vy, 0, "    ~");
     wattroff(edwin, COLOR_PAIR(COMMENT_PAIR));
   }
 

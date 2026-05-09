@@ -1,10 +1,10 @@
-- [x] up and down movements  
-- [x] sticky scrolling  
+- [x] up and down movements
+- [x] sticky scrolling
 - [x] split editor operations into component level  
-- [x] make line updation incremental *(using gap buffer)*  
-- [x] make Editor window attachable  
+- [x] make line updation incremental *(using gap buffer)*
+- [x] make Editor window attachable
 - [x] handle horizontal text overflows  
-- [x] undo-redo  
+- [x] undo-redo
 - [x] implement lazy line updation technique and use gap buffer for lines
 - [x] tab handling and horizontal rendering
 - [x] del key
@@ -12,7 +12,7 @@
 - [x] auto newline to matching pairs
 - [ ] ensure correctness of sticky cursor with line indentation
 - [x] save and load files
-- [x] colors
+- [x] colors architecture
 - [ ] selection
 - [x] status line  
 - [x] indentation
