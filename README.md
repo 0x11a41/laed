@@ -7,14 +7,18 @@ A layman text editor
 - [x] auto indentation
 - [x] line numbers
 - [x] open/close file from cli
+- [ ] use ropes instead of gap buffer
+- [ ] text selection
 - [ ] command palette
 - [ ] vim mode
 - [ ] tabs
 - [ ] copy paste
-- [ ] text selection
 - [ ] syntax highlighting
 - [ ] file manager
 
-## demo
-![](demo/1.png)
-![](demo/2.png)
+<table>
+  <tr>
+    <td><img src="demo1.png" alt="Demo Image 1" width="100%"></td>
+    <td><img src="demo2.png" alt="Demo Image 2" width="100%"></td>
+  </tr>
+</table>
