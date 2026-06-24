@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdio.h>
 #include <malloc.h>
 #include <assert.h>
@@ -5,13 +7,11 @@
 #include <stdlib.h>
 
 #include "itypes.h"
+#include "utils.h"
 
-#define AVL_TYPE i32
-#define MAX(a, b) (((a) > (b)) ? (a) : (b))
-
-u8 DEBUG = 1;
-#define debug(...) if (DEBUG) printf(__VA_ARGS__)
-
+#ifndef AVL_TYPE
+#define AVL_TYPE u32
+#endif
 
 typedef struct node {
     AVL_TYPE     val;
@@ -26,9 +26,18 @@ typedef struct {
     i32 (*cmp)(void* a, void* b);
 } AvlTree;
 
+AvlTree avl_init(i32 (*cmp)(void* a, void* b));
+void avl_insert(AvlTree *avl, AVL_TYPE val);
+AVL_TYPE avl_remove(AvlTree *avl, AVL_TYPE val);
+Node* avl_search(Node* root, AVL_TYPE key);
+void avl_free(AvlTree* avl);
+
+
+#ifdef AVL_IMPLEMENTATION
+
 AvlTree avl_init(i32 (*cmp)(void* a, void* b))
 {
-        return (AvlTree) {
+    return (AvlTree) {
         .root = NULL,
         .cmp = cmp,
     };
@@ -58,18 +67,18 @@ static inline void update_height(Node* p)
     }
 }
 
-Node* create_node(AVL_TYPE val)
+static Node* create_node(AVL_TYPE val)
 {
     Node* node = (Node*)malloc(sizeof(Node));
     assert(node != NULL);
-    node->lst = node->rst = NULL;
-    node->val = val;
+    node->lst    = node->rst = NULL;
+    node->val    = val;
     node->parent = NULL;
     node->height = 0;
     return node;
 }
 
-Node* rotate_left(Node* pivot)
+static Node* rotate_left(Node* pivot)
 {
     Node* P = pivot;
     Node* T = pivot->lst;
@@ -98,7 +107,7 @@ Node* rotate_left(Node* pivot)
     return T;
 }
 
-Node* rotate_right(Node* pivot)
+static Node* rotate_right(Node* pivot)
 {
     if (pivot == NULL) return NULL;
     Node* P = pivot;
@@ -126,7 +135,7 @@ Node* rotate_right(Node* pivot)
     return T;
 }
 
-void avl_self_balance(AvlTree* avl, Node* modified)
+static void avl_self_balance(AvlTree* avl, Node* modified)
 {
     debug("\n== balancing from %d ==\n", modified->val);
     for (Node* curr = modified; curr != NULL; curr = curr->parent) {
@@ -286,7 +295,7 @@ void avl_free(AvlTree* avl)
     avl->cmp = NULL;
 }
 
-void _visualize(Node* root)
+static void _visualize(Node* root)
 {
     if (root == NULL) return;
     printf("[%d", root->val);
@@ -306,29 +315,32 @@ void display(Node* root)
     printf("\n");
 }
 
-i32 cmp(void* val1, void* val2) {
-    i32 a = *(i32*)val1;
-    i32 b = *(i32*)val2;
-    return a - b;
-}
+#endif
 
-i32 main()
-{
-    AvlTree avl = avl_init(cmp);
-    i32 vals[] = { 50, 30, 10, 60, 70, 5, 8, 65, 2, 1 };
-    u32 n = sizeof(vals) / sizeof(int);
-    for (u32 i = 0; i < n; i++) {
-        avl_insert(&avl, vals[i]);
-    }
-    
-    display(avl.root);
+// i32 cmp(void* val1, void* val2) {
+//     i32 a = *(i32*)val1;
+//     i32 b = *(i32*)val2;
+//     return a - b;
+// }
 
-    Node* res = avl_search(avl.root, 65);
-    if (res) {
-        printf("result found %d\n", res->val);
-    } else 
-        printf("Search failed\n");
+// i32 main()
+// {
+//     AvlTree avl = avl_init(cmp);
+//     i32 vals[] = { 50, 30, 10, 60, 70, 5, 8, 65, 2, 1 };
+//     u32 n = sizeof(vals) / sizeof(int);
+//     for (u32 i = 0; i < n; i++) {
+//         avl_insert(&avl, vals[i]);
+//     }
     
-    avl_free(&avl);
-    return 0;
-}
+//     display(avl.root);
+
+//     Node* res = avl_search(avl.root, 65);
+//     if (res) {
+//         printf("result found %d\n", res->val);
+//     } else 
+//         printf("Search failed\n");
+    
+//     avl_free(&avl);
+//     return 0;
+// }
+

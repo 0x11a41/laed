@@ -3,6 +3,9 @@
 #include "itypes.h"
 #include <time.h>
 
+u8 DEBUG = 0;
+#define debug(...) if (DEBUG) printf(__VA_ARGS__)
+
 // to find the center of offseted length
 #define CENTER(length, offset) ((((length) - (offset)) / 2))
 

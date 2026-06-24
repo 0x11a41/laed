@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "itypes.h"
+#include "utils.h"
 
 #ifndef STK_TYPE
 #define STK_TYPE u64
@@ -39,7 +40,7 @@ static Stack stack_init(void)
     return stk;
 }
 
-static void push(Stack *stk, STK_TYPE val)
+void push(Stack *stk, STK_TYPE val)
 {
     if (STK_ISEMPTY(stk))
         stk->top = 0;
@@ -57,9 +58,10 @@ static void push(Stack *stk, STK_TYPE val)
     }
 
     stk->buf[stk->top] = val;
+    debug("PUSH[%lu]\n", val);
 }
 
-static STK_TYPE pop(Stack *stk)
+STK_TYPE pop(Stack *stk)
 {
     if (STK_ISEMPTY(stk))
         return STK_ERR;
@@ -69,16 +71,17 @@ static STK_TYPE pop(Stack *stk)
         stk->top = STK_EMPTY;
     else
         stk->top--;
+    debug("POP[%lu]\n", val);
     return val;
 }
 
-static STK_TYPE peek(Stack *stk)
+STK_TYPE peek(Stack *stk)
 {
     if (STK_ISEMPTY(stk)) return STK_ERR;
     return stk->buf[stk->top];
 }
 
-static void stk_free(Stack *stk)
+void stk_free(Stack *stk)
 {
     free(stk->buf);
     stk->buf = NULL;
